@@ -5,26 +5,29 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
 import Home from "./pages/Dashboard/Home";
 import Income from "./pages/Dashboard/income";
 import Expense from "./pages/Dashboard/expense";
+import UserProvider from "./context/userContext";
+
 const App = () => {
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Root />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/dashboard" element={<Home />}></Route>
-          <Route path="/income" element={<Income />}></Route>
-          <Route path="/expense" element={<Expense />}></Route>
-        </Routes>
-      </Router>
-    </div>
+    <UserProvider>
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Root />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<SignUp />}></Route>
+            <Route path="/dashboard" element={<Home />}></Route>
+            <Route path="/income" element={<Income />}></Route>
+            <Route path="/expense" element={<Expense />}></Route>
+          </Routes>
+        </Router>
+      </div>
+    </UserProvider>
   );
 };
 
