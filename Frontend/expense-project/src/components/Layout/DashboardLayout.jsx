@@ -1,26 +1,28 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext } from "react";
+import UserContext from "../../context/UserContext";
 import Navbar from "./Navbar";
 import SideMenu from "./SideMenu";
 
-const DashboardLayout = ({ children }) => {
-  const location = useLocation();
+const DashboardLayout = ({ children, activeMenu }) => {
+  const { user, loading } = useContext(UserContext);
+
+  if (loading) {
+    return <div className="p-5">Loading...</div>;
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Navbar */}
-      <Navbar />
+      <Navbar activeMenu={activeMenu} />
 
-      {/* Main layout */}
-      <div className="flex flex-1">
-        {/* Sidebar */}
-        <div className="max-[1080px]:hidden">
-          <SideMenu />
+      {user && (
+        <div className="flex flex-1">
+          <div className="max-[1080px]:hidden">
+            <SideMenu activeMenu={activeMenu} />
+          </div>
+
+          <div className="flex-1 p-5">{children}</div>
         </div>
-
-        {/* Main content */}
-        <div className="flex-1 p-5">{children}</div>
-      </div>
+      )}
     </div>
   );
 };

@@ -10,7 +10,7 @@ const upload = require("../middleware/uploadMiddleware");
 const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post("/getUser", protect, getUserInfo);
+router.get("/getUser", protect, getUserInfo);
 
 router.post("/upload-image", upload.single("image"), (req, res) => {
   if (!req.file) {
