@@ -10,6 +10,7 @@ import { addThousandsSeparator } from "../../utils/helper";
 import InfoCard from "../../components/Cards/InfoCard";
 import RecentTransaction from "../../components/Dashboard/RecentTransaction";
 import FinanceOverview from "../../components/Dashboard/FinanceOverview";
+import ExpenseTransactions from "../../components/Dashboard/ExpenseTransactions";
 
 const Home = () => {
   useUserAuth();
@@ -72,7 +73,7 @@ const Home = () => {
       </div> */}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <RecentTransaction
+        {/* <RecentTransaction
           transactions={dashboardData?.recentTransactions}
           onSeeMore={() => navigate("/expense")}
         />
@@ -81,6 +82,11 @@ const Home = () => {
           totalBalance={dashboardData?.totalBalance || 0}
           totalIncome={dashboardData?.totalIncome || 0}
           totalExpense={dashboardData?.totalExpense || 0}
+        /> */}
+
+        <ExpenseTransactions
+          transactions={dashboardData?.last30DaysExpenses?.transaction || []}
+          onSeeMore={() => navigate("/expense")}
         />
       </div>
     </DashboardLayout>
