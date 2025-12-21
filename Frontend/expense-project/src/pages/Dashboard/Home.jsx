@@ -50,68 +50,68 @@ const Home = () => {
 
   return (
     <DashboardLayout activeMenu="Dashboard">
-      <div className="my-5 mx-auto">Home</div>
+      <div className="my-5 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <InfoCard
+            icon={<IoMdCard />}
+            label="Total Balance"
+            value={addThousandsSeparator(dashboardData?.totalBalance || 0)}
+            color="bg-primary"
+          />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <InfoCard
-          icon={<IoMdCard />}
-          label="Total Balance"
-          value={addThousandsSeparator(dashboardData?.totalBalance || 0)}
-          color="bg-primary"
-        />
+          <InfoCard
+            icon={<LuWalletMinimal />}
+            label="Total Income"
+            value={addThousandsSeparator(dashboardData?.totalIncome || 0)}
+            color="bg-orange-500"
+          />
 
-        <InfoCard
-          icon={<LuWalletMinimal />}
-          label="Total Income"
-          value={addThousandsSeparator(dashboardData?.totalIncome || 0)}
-          color="bg-orange-500"
-        />
+          <InfoCard
+            icon={<LuHandCoins />}
+            label="Total Expense"
+            value={addThousandsSeparator(dashboardData?.totalExpense || 0)}
+            color="bg-red-500"
+          />
+        </div>
 
-        <InfoCard
-          icon={<LuHandCoins />}
-          label="Total Expense"
-          value={addThousandsSeparator(dashboardData?.totalExpense || 0)}
-          color="bg-red-500"
-        />
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <RecentTransaction
+            transactions={dashboardData?.recentTransactions}
+            onSeeMore={() => navigate("/expense")}
+          />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <RecentTransaction
-          transactions={dashboardData?.recentTransactions}
-          onSeeMore={() => navigate("/expense")}
-        />
+          <FinanceOverview
+            totalBalance={dashboardData?.totalBalance || 0}
+            totalIncome={dashboardData?.totalIncome || 0}
+            totalExpense={dashboardData?.totalExpense || 0}
+          />
 
-        <FinanceOverview
-          totalBalance={dashboardData?.totalBalance || 0}
-          totalIncome={dashboardData?.totalIncome || 0}
-          totalExpense={dashboardData?.totalExpense || 0}
-        />
+          <ExpenseTransactions
+            transactions={dashboardData?.last30DaysExpenses?.transaction || []}
+            onSeeMore={() => navigate("/expense")}
+          />
 
-        <ExpenseTransactions
-          transactions={dashboardData?.last30DaysExpenses?.transaction || []}
-          onSeeMore={() => navigate("/expense")}
-        />
+          <Last30DaysExpenses
+            data={dashboardData?.last30DaysExpenses?.transaction || []}
+          />
 
-        <Last30DaysExpenses
-          data={dashboardData?.last30DaysExpenses?.transaction || []}
-        />
+          <RecentIncomeWithChart
+            data={
+              dashboardData?.last60DaysIncomeTransactions?.transaction?.slice(
+                0,
+                4
+              ) || []
+            }
+            totalIncome={dashboardData?.totalIncome || 0}
+          />
 
-        <RecentIncomeWithChart
-          data={
-            dashboardData?.last60DaysIncomeTransactions?.transaction?.slice(
-              0,
-              4
-            ) || []
-          }
-          totalIncome={dashboardData?.totalIncome || 0}
-        />
-
-        <RecentIncome
-          transactions={
-            dashboardData?.last60DaysIncomeTransactions?.transaction || []
-          }
-          onSeeMore={() => navigate("/income")}
-        />
+          <RecentIncome
+            transactions={
+              dashboardData?.last60DaysIncomeTransactions?.transaction || []
+            }
+            onSeeMore={() => navigate("/income")}
+          />
+        </div>
       </div>
     </DashboardLayout>
   );
