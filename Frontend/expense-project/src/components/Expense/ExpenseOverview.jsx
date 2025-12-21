@@ -14,7 +14,7 @@ const ExpenseOverview = ({ transactions, onExpenseIncome }) => {
   }, [transactions]);
   return (
     <div className="card">
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-between">
         <div className="">
           <h5 className="text-lg">Expense Overview</h5>
           <p className="text-xs text-gray-400 mt-1">

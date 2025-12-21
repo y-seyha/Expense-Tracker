@@ -6,6 +6,8 @@ import DashboardLayout from "../../components/Layout/DashboardLayout";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPath";
 import ExpenseOverview from "../../components/Expense/ExpenseOverview";
+import AddExpenseForm from "../../components/Expense/AddExpenseForm";
+import Modal from "../../components/Layout/Modal";
 
 const Expense = ({ activeMenu }) => {
   useUserAuth();
@@ -95,6 +97,14 @@ const Expense = ({ activeMenu }) => {
             />
           </div>
         </div>
+
+        <Modal
+          isOpen={openAddExpenseModal}
+          onClose={() => setOpenAddExpenseModal(false)}
+          title="Add Expense"
+        >
+          <AddExpenseForm onAddExpense={handleAddExpense} />
+        </Modal>
       </div>
     </DashboardLayout>
   );
