@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
 import IncomeOverview from "../../components/Income/IncomeOverview";
 import axiosInstance from "../../utils/axiosInstance";
@@ -39,7 +40,43 @@ const Income = ({ activeMenu }) => {
   };
 
   //Handle Add Income
-  const handleAddIncome = async (income) => {};
+  const handleAddIncome = async (income) => {
+    const { source, amount, date, icon } = income;
+
+    //Validation Checks
+    if (!source.trim()) {
+      toast.error("Source is required.");
+      return;
+    }
+
+    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+      toast.error("Amount should be a valid number greater than 0.");
+      return;
+    }
+
+    if (!date) {
+      toast.error("Date is required.");
+      return;
+    }
+
+    try {
+      await axiosInstance.post(API_PATHS.INCOME.ADD_INCOME, {
+        source,
+        amount,
+        date,
+        icon,
+      });
+
+      setOpenAddIncomeModal(false);
+      toast.success("Income added successfully.");
+      fetchIncomeDetails();
+    } catch (error) {
+      console.error(
+        "Error adding Income : ",
+        error.response?.data?.message || error.message
+      );
+    }
+  };
 
   //Delete Income
   const deleteIncome = async (id) => {};
