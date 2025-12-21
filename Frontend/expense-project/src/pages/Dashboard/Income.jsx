@@ -6,6 +6,7 @@ import { API_PATHS } from "../../utils/apiPath";
 import UserContext from "../../context/UserContext";
 import { useUserAuth } from "../../hooks/useUserAuth";
 import Modal from "../../components/Layout/Modal";
+import AddIncomeForm from "../../components/Income/AddIncomeForm";
 
 const Income = ({ activeMenu }) => {
   useUserAuth();
@@ -68,7 +69,7 @@ const Income = ({ activeMenu }) => {
           onClose={() => setOpenAddIncomeModal(false)}
           title="Add Income"
         >
-          <div>Add Income Form</div>
+          <AddIncomeForm onAddIncome={handleAddIncome} />
         </Modal>
       </div>
     </DashboardLayout>
