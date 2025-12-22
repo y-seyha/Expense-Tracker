@@ -8,37 +8,46 @@ const generateToken = (id) => {
 
 //Register User
 exports.registerUser = async (req, res) => {
-  const { fullName, email, password, profileImageUrl } = req.body;
-
-  //validation : Check for missing field
-  if (!fullName || !email || !password) {
-    return res.status(400).json({ message: "All fields are require!" });
-  }
-
   try {
-    //check if email already exist
+    const { fullname, email, password } = req.body;
+
+    // Validation
+    if (!fullname || !email || !password) {
+      return res.status(400).json({ message: "All fields are required!" });
+    }
+
+    // Check if email exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "Email is already in use!" });
     }
 
-    //Create the user
+    // ✅ Create image URL from multer
+    let profileImageUrl = "";
+    if (req.file) {
+      profileImageUrl = `${req.protocol}://${req.get("host")}/uploads/${
+        req.file.filename
+      }`;
+    }
+
+    // Create user
     const user = await User.create({
-      fullName,
+      fullName: fullname, // map correctly
       email,
       password,
       profileImageUrl,
     });
 
     res.status(201).json({
-      id: user._id,
       user,
       token: generateToken(user._id),
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error Registering User", error: error.message });
+    console.error(error);
+    res.status(500).json({
+      message: "Error registering user",
+      error: error.message,
+    });
   }
 };
 

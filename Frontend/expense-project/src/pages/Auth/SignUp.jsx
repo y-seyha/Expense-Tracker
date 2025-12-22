@@ -24,8 +24,6 @@ const Signup = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    let profileImageURL = "";
-
     if (!fullName) {
       setError("Please enter your name");
       return;
@@ -44,24 +42,25 @@ const Signup = () => {
 
     //SignUp API Call
     try {
-      //Upload image if exist
-      if (profilePic) {
-        const imgUploadRes = await uploadImage(profilePic);
-        profileImageURL = imgUploadRes.imgUrl || "";
+      const formData = new FormData();
+      formData.append("fullname", fullName);
+      formData.append("email", email);
+      formData.append("password", password);
+
+      if (profilePic instanceof File) {
+        formData.append("image", profilePic);
       }
 
-      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
-        fullName,
-        email,
-        password,
-        profileImageURL,
-      });
+      const response = await axiosInstance.post(
+        API_PATHS.AUTH.REGISTER,
+        formData
+      );
 
       const { token, user } = response.data;
 
       if (token) {
         localStorage.setItem("token", token);
-        updateUser[user];
+        updateUser(user);
         navigate("/dashboard");
       }
     } catch (error) {

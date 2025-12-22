@@ -34,7 +34,7 @@ app.use("/api/v1/expense", expenseRoute);
 app.use("/api/v1/dashboard", dashboardRoute);
 
 //Server upload folder
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static("uploads"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
